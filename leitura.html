@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Leitura</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function mostrar(split, i) {
+			var delay = $("#delay").val();;
+
+			setTimeout(function() {
+				console.log(split[i]);
+				console.log(i);
+				console.log(delay);
+ 		 		$("#texto").text(split[i]);
+
+ 		 		if (split.length - 1  == i) {
+ 		 			console.log("fim");
+
+ 		 			setTimeout(function() {
+ 		 			$("#texto").css("display", "none")
+					$("#iniciar").css("display", "block")
+					}, 3000);
+ 		 		}
+
+ 		 	}, i * delay);
+		}
+
+		function iniciar() {
+			var texto = $("#textarea").val();
+			var split = texto.split(" ");
+			$("#texto").css("display", "block")
+			$("#iniciar").css("display", "none")
+			for (var i = 0; i < split.length; i++) {
+				mostrar(split, i);
+			}
+		}
+
+	</script>
+</head>
+<body style="background-color: black;">
+	<div id="iniciar">
+		<button onclick="iniciar()">Iniciar</button>
+		<input type="file" name="inputfile" id="inputfile" style="color: white;">
+		<input type="number" value="200" id="delay"><span style="color: white;"> Velocidade</span>
+		<br>
+		<textarea id="textarea" rows="30" cols="100">Olá, tudo bem com vc? Sim, e com vc?</textarea>
+	</div>
+
+	<h1 id="texto" style="text-align: center; padding: 10%; color: white; display: none;"></h1>
+
+	<script type="text/javascript">
+		document.getElementById('inputfile').addEventListener('change', function() {
+            var fr=new FileReader();
+            fr.onload=function(){
+                //document.getElementById('output').textContent=fr.result;
+                 $("#textarea").val(fr.result);
+                 console.log(fr.result)
+            }
+              
+            fr.readAsText(this.files[0]);
+        })
+	</script>
+</body>
+</html>
